@@ -1,36 +1,19 @@
+import React, { useState, useEffect } from 'react'
 import Head from 'next/head'
-import Image from 'next/image'
 import styles from '../styles/Home.module.css'
-import image01 from './../public/images/pexels-yuri-manei-2690323.jpg'
-import image02 from './../public/images/julian-wan-WNoLnJo7tS8-unsplash.jpg'
-import image03 from './../public/images//matthew-hamilton-tNCH0sKSZbA-unsplash.jpg'
-import image04 from './../public/images/pexels-behrouz-sasani-10878304.jpg'
-import image05 from './../public/images/pexels-lucas-allmann-1116344.jpg'
-import image06 from './../public/images/pexels-marcio-skull-3579181.jpg'
-import image07 from './../public/images/pexels-yuri-manei-2690323.jpg'
-import image08 from './../public/images/pexels-ogo-1447885.jpg'
-import image09 from './../public/images/product-16.jpg'
-import customStyle from './../styles/style.module.css'
-import { AiOutlineHeart } from 'react-icons/ai'
-import { MdOutlineModeComment } from 'react-icons/md'
-import { RiSendPlaneLine } from 'react-icons/ri'
-import { FiSave } from 'react-icons/fi'
-import { IoMdHome } from 'react-icons/io'
-import { CiSearch } from 'react-icons/ci'
-import { MdOutlineExplore } from 'react-icons/md'
-import { BiMessageRoundedDetail } from 'react-icons/bi'
-import { IoMdHeartEmpty } from 'react-icons/io'
-import { BiMessageSquareAdd } from 'react-icons/bi'
-import { CgProfile } from 'react-icons/cg'
-import { AiOutlineMenu } from 'react-icons/ai'
+import Sidebar from '../components/sidebar'
+import Shorts from '../components/shorts'
+import File from '../components/data/file'
+import Suggestions from '../components/suggestions'
 
-
-
-
-
-
-
-export default function Home() {
+export const getStaticProps  = async ()=>{
+  const response = await fetch(`https://api.unsplash.com/photos/random?count=6&client_id=npxnEdaLlHiFXJTXd9gAON2o9v0bV7ztrUTfLBrQD84`)
+  const data = await response.json(); 
+  console.log("response............",data);
+  return { props: { data } }
+}
+export default function Home({data}) {
+  console.log("data",data);
   return (
     <div className={styles.container}>
       <Head>
@@ -44,122 +27,27 @@ export default function Home() {
         <div className='container-fluid'>
           <div className='row vh-100'>
             <div className='col-2 border-end'>
-              <h2 className='py-5'>Instagram</h2>
-
-              <div className='pb-3 d-flex align-items-center'><IoMdHome className='fs-2 me-3' /><a className='text-decoration-none text-dark fs-4' href='#'>Home</a></div>
-              <div className='pb-3 d-flex align-items-center'><CiSearch className='fs-2 me-3' /><a className='text-decoration-none text-dark fs-4' href='#'>Search</a></div>
-              <div className='pb-3 d-flex align-items-center'><MdOutlineExplore className='fs-2 me-3' /><a className='text-decoration-none text-dark fs-4' href='#'>Explore</a></div>
-              <div className='pb-3 d-flex align-items-center'><BiMessageRoundedDetail className='fs-2 me-3' /><a className='text-decoration-none text-dark fs-4' href='#'>Messages</a></div>
-              <div className='pb-3 d-flex align-items-center'><IoMdHeartEmpty className='fs-2 me-3' /><a className='text-decoration-none text-dark fs-4' href='#'>Notification</a></div>
-              <div className='pb-3 d-flex align-items-center'><BiMessageSquareAdd className='fs-2 me-3' /><a className='text-decoration-none text-dark fs-4' href='#'>Create</a></div>
-              <div className='pb-3 d-flex align-items-center'><CgProfile className='fs-2 me-3' /><a className='text-decoration-none text-dark fs-4' href='#'>Profile</a></div>
-              <div className='pb-3 d-flex align-items-center'><AiOutlineMenu className='fs-2 me-3' /><a className='text-decoration-none text-dark fs-4' href='#'>More</a></div>
+              <Sidebar />
             </div>
 
-            <div className='col-6'>
-              <div className="row">
-                <div className='col-8 offset-4 pt-3'>
-                  <div className='border rounded p-3 d-flex justify-content-around'>
-                    <div className='d-flex flex-column align-items-center'>
-                      <Image className={`rounded-circle ${customStyle.shorts}`} src={image01} alt='female-image' />
-                      <label>Christanio</label>
+            <div className='col-10'>
+              <div className='row vh-100 overflow-auto'>
+                <div className='col-7'>
+                  <div className="row">
+                    <div className='col-8 offset-4 pt-3'>
+                      <Shorts data = {data} />
+                      <File data = {data} />
                     </div>
-
-                    <div className='d-flex flex-column align-items-center'>
-                      <Image className={`rounded-circle ${customStyle.shorts}`} src={image02} alt='female-image' />
-                      <label>Alina</label>
-                    </div>
-
-                    <div className='d-flex flex-column align-items-center'>
-                      <Image className={`rounded-circle ${customStyle.shorts}`} src={image03} alt='female-image' />
-                      <label>Aliya</label>
-                    </div>
-
-                    <div className='d-flex flex-column align-items-center'>
-                      <Image className={`rounded-circle ${customStyle.shorts}`} src={image04} alt='female-image' />
-                      <label>John</label>
-                    </div>
-
-                    <div className='d-flex flex-column align-items-center'>
-                      <Image className={`rounded-circle ${customStyle.shorts}`} src={image05} alt='female-image' />
-                      <label>Sadia</label>
-                    </div>
-
-                    <div className='d-flex flex-column align-items-center'>
-                      <Image className={`rounded-circle ${customStyle.shorts}`} src={image06} alt='female-image' />
-                      <label>Smith</label>
-                    </div>
-
-                    <div className='d-flex flex-column align-items-center'>
-                      <Image className={`rounded-circle ${customStyle.shorts}`} src={image07} alt='female-image' />
-                      <label>Mark</label>
-                    </div>
-
-                  </div>
-
-                  <div className='border rounded mt-5'>
-                    <div className='d-flex align-items-center p-3'>
-                      <div>
-                        <Image className={`rounded-circle ${customStyle.profileImg}`} src={image08} alt='female-image' />
-                      </div>
-                      <div className='d-flex flex-column ps-3'>
-                        <label>Alina Khan</label>
-                        <label className={customStyle.textXsm}>Los angeles</label>
-                      </div>
-                    </div>
-
-                    <div>
-                      <Image className={customStyle.cardImg} src={image09} alt='female-image' />
-                    </div>
-
-                    <div className='px-3 pt-2 d-flex justify-content-between'>
-                      <div>
-                        <AiOutlineHeart className='fs-2' />
-
-                        <MdOutlineModeComment className='fs-2 ms-3' />
-
-                        <RiSendPlaneLine className='fs-2 ms-3' />
-                      </div>
-
-                      <div>
-                        <FiSave className='fs-3' />
-                      </div>
-                    </div>
-
-                    <div className='px-3'>
-                      <label className={customStyle.textSm}>31,031,086 likes</label>
-
-                      <p className={customStyle.textSm}>
-                        It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English.
-                      </p>
-                    </div>
-                  </div>
-
-                </div>
-              </div>
-            </div>
-
-            <div className='col-4 px-5 pt-4'>
-              <div className='d-flex justify-content-between align-items-center'>
-                <div className='d-flex align-items-center p-3'>
-                  <div>
-                    <Image className={`rounded-circle ${customStyle.profileImg}`} src={image08} alt='female-image' />
-                  </div>
-                  <div className='d-flex flex-column ps-3'>
-                    <label>Alina Khan</label>
-                    <label className={customStyle.textXsm}>Los angeles</label>
                   </div>
                 </div>
 
-                <div>
-                  <label className={`text-primary ${customStyle.textSm}`}>Switch</label>
+                <div className='col-4 px-5 pt-4'>
+                  <Suggestions data = {data} />
                 </div>
               </div>
             </div>
           </div>
-
         </div>
-
       </main>
 
       {/* <footer className={styles.footer}>
